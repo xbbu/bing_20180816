@@ -88,7 +88,7 @@ for ivar in categorical_vars:
     #print(ivar_label)
     df[ivar_label] = label_encoder.fit_transform(df[ivar])
 
-df.corr(method='kendall')['make_label']
+print(df.corr(method='kendall')['make_label'])
 
 # feature selection
 print('*** feature selection ......')
@@ -107,6 +107,7 @@ for ivar in ['Fine amount', 'Latitude', 'Longitude']:
     """
     df[ivar] = df[ivar].apply(lambda x: str(x))
     df = df[df[ivar] != '']
+    df = df[df[ivar] != 'nan']
     df[ivar] = df[ivar].apply(lambda x: eval(x))
 
 feature_importance_dict = dict(zip(
@@ -155,8 +156,8 @@ for ivar in categorical_vars:
     ivar_name = re.sub(' ', '_', ivar.lower().strip())
     ivar_label = '{}_label'.format(ivar_name)
     ivar_dict = df.set_index(ivar)[ivar_label].to_dict()
-    print(ivar)
-    print(ivar_dict)
+    #print(ivar)
+    #print(ivar_dict)
 
     df_ivar = pd.DataFrame(columns=[ivar_name, ivar_label])
     df_ivar[ivar_name] = list(ivar_dict.keys())
